@@ -11,9 +11,9 @@ import java.awt.Point;
 public class Snake_Game extends JPanel implements KeyListener, Runnable {
     private static final long serialVersionUID = 1L;
 
-    public static final int height = 500;
-    public static final int width = 500;
-    public static final int gridSize = 250;
+    public static final int height = 600;
+    public static final int width = 600;
+    public static final int gridSize = 100;
 
     public static int upKey = 38;
     public static int downKey = 40;
@@ -45,7 +45,7 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         addKeyListener(this);
         frame.addKeyListener(this);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setVisible(true);
         frame.setContentPane(this);
         setPreferredSize(new Dimension(width, height));
@@ -62,8 +62,8 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         g2d.clearRect(0,0, width, height);
         drawGrid(g);
         drawFood(g);
-        g2d.setColor(Color.ORANGE);
-        g2d.fillRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize);
+        g2d.setColor(Color.GREEN);
+        g2d.fillRoundRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize, gridSize / 2, gridSize / 2);
         g2d.setColor(Color.BLACK);
         g2d.drawString(Integer.toString(score), (int)food.getX() + gridSize / 2, (int)food.getY() + gridSize / 2);
     }
@@ -101,7 +101,7 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
             }
         }
         
-        g2d.fillRect((int)food.getX(), (int)food.getY(), gridSize, gridSize);
+        g2d.fillOval((int)food.getX(), (int)food.getY(), gridSize, gridSize);
         
     }
 
@@ -122,11 +122,11 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.GREEN);
         if(directionUp == true) {
-            cursor.move(0, gridSize * factor);
-            g2d.fillRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize);
+            cursor.translate(0, gridSize * factor);
+            g2d.fillRoundRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize, gridSize / 2, gridSize / 2);
         } else {
-            cursor.move(gridSize * factor, 0);
-            g2d.fillRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize);
+            cursor.translate(gridSize * factor, 0);
+            g2d.fillRoundRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize, gridSize / 2, gridSize / 2);
         }
         
     }

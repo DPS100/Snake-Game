@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Snake_Game",
+            "request": "launch",
+            "mainClass": "Snake_Game"
+        }
+    ]
+}
