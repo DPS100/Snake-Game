@@ -101,7 +101,8 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
             }
         }
         
-        g2d.fillOval((int)food.getX(), (int)food.getY(), gridSize, gridSize);
+        //g2d.fillOval((int)food.getX(), (int)food.getY(), gridSize, gridSize);
+        drawCell(g, food, gridSize);
         
     }
 
@@ -118,16 +119,10 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         }
     }
 
-    public void drawCell(Graphics g, int factor, boolean directionUp) {
+    public void drawCell(Graphics g, Point point, int factor) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.GREEN);
-        if(directionUp == true) {
-            cursor.translate(0, gridSize * factor);
-            g2d.fillRoundRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize, gridSize / 2, gridSize / 2);
-        } else {
-            cursor.translate(gridSize * factor, 0);
-            g2d.fillRoundRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize, gridSize / 2, gridSize / 2);
-        }
+        g2d.drawRoundRect((int)point.getX(), (int)point.getY(), gridSize, gridSize, factor, factor);
         
     }
 
