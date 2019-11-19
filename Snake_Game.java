@@ -13,7 +13,7 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
 
     public static final int height = 600;
     public static final int width = 600;
-    public static final int gridSize = 100;
+    public static final int gridSize = 50;
 
     public static int upKey = 38;
     public static int downKey = 40;
@@ -45,7 +45,7 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         addKeyListener(this);
         frame.addKeyListener(this);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setVisible(true);
         frame.setContentPane(this);
         setPreferredSize(new Dimension(width, height));
@@ -64,8 +64,7 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         drawFood(g);
         g2d.setColor(Color.GREEN);
         g2d.fillRoundRect((int)cursor.getX(), (int)cursor.getY(), gridSize, gridSize, gridSize / 2, gridSize / 2);
-        g2d.setColor(Color.BLACK);
-        g2d.drawString(Integer.toString(score), (int)food.getX() + gridSize / 2, (int)food.getY() + gridSize / 2);
+        
     }
 
     public Point randomCellCoord() {
@@ -111,10 +110,10 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
     public void drawGrid(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.BLACK);
-        for (int x = 0; x <= height; x += gridSize) {
+        for (int x = 0; x <= width; x += gridSize) {
             g2d.drawLine(x, 0, x, height);
         }
-        for (int y = 0; y <= width; y += gridSize) {
+        for (int y = 0; y <= height; y += gridSize) {
             g2d.drawLine(0, y, width, y);
         }
     }
