@@ -12,9 +12,9 @@ import java.util.ArrayList;
 public class Snake_Game extends JPanel implements KeyListener, Runnable {
     private static final long serialVersionUID = 1L;
 
-    public static final int height = 500;
-    public static final int width = 500;
-    public static final int gridSize = 50;
+    public static final int height = 525;
+    public static final int width = 525;
+    public static final int gridSize = 75;
     public static final int tickSpeed = 100;
 
     public static int upKey = 38;
@@ -24,10 +24,11 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
     public static boolean up = false;
     public static boolean down = false;
     public static boolean left = false;
-    public static boolean right = false ;
+    public static boolean right = false;
+    public int circumference;
 
-    public static ArrayList<Point> body = new ArrayList<Point>();
     public static Point cursor = new Point(0, 0);
+    public static ArrayList<Point> body = new ArrayList<Point>();
     public static Point lastPos = cursor;
     public static Point food = new Point((int) (Math.random() * (width / gridSize)) * gridSize, (int) (Math.random() * (height / gridSize)) * gridSize);
 
@@ -51,7 +52,7 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         frame.setVisible(true);
         frame.setContentPane(this);
         setPreferredSize(new Dimension(width, height));
-        setSize(new Dimension(width, height));
+        //setSize(new Dimension(width, height));
         frame.pack();
         setFocusTraversalKeysEnabled(false);
         frame.setLocationRelativeTo(null);
@@ -68,8 +69,9 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         g2d.clearRect(0, 0, width, height);
         drawGrid(g);
         drawFood(g);
+        drawBody(g2d);
         g2d.setColor(Color.BLUE);
-        g2d.fillRoundRect((int) cursor.getX(), (int) cursor.getY(), gridSize, gridSize, gridSize / 2, gridSize / 2);
+        g2d.fillRect((int) cursor.getX(), (int) cursor.getY(), gridSize, gridSize);
         didLose(g, score);
     }
 
@@ -87,8 +89,7 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         final Point point = new Point(0, 0);
         int randIntX = ((int) (Math.random() * (width / gridSize)) * gridSize);
         int randIntY = ((int) (Math.random() * (height / gridSize)) * gridSize);
-        boolean stop = false;
-        for (int x = 0; x < 10 && stop == false; x++) {
+        for (boolean stop = false; stop == false;) {
             if (randIntX == (int) cursor.getX()) {
                 randIntX = ((int) (Math.random() * (width / gridSize)) * gridSize);
             } else if (randIntY == (int) cursor.getY()) {
@@ -138,6 +139,7 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
     }
 
     public void movePlayer() {
+        lastPos = cursor;
         if (up == true) {
             cursor.translate(0, -gridSize);
         } else if (down == true) {
@@ -147,7 +149,21 @@ public class Snake_Game extends JPanel implements KeyListener, Runnable {
         } else if (right == true) {
             cursor.translate(gridSize, 0);
         } else {
-            cursor.setLocation(0, 0);
+            cursor.setLocation(gridSize, 0);
+        }
+    }
+
+    public void drawBody(Graphics2D g2d) {
+        if (body.size() < 1) {
+            body.add(new Point(0,0));
+        } else {
+            body.set(0, lastPos);
+        }
+        for(int i = 0; i < body.size(); i++) {
+            circumference = gridSize / (gridSize * (i + 2));
+            g2d.setColor(Color.BLUE);
+            //System.out.println(i);
+            g2d.fillRoundRect((int)body.get(i).getX(), (int)body.get(i).getY(), gridSize, gridSize, 0, 0);
         }
     }
 
